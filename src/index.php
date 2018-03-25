@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>MOOV</title>
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Noto+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style>
     @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
     body {
@@ -56,10 +55,12 @@
 </div>
 <div id="result"></div>
 <div id="load_more"><button id="_more" class="btn btn-default btn-lg btn-block" type="submit"><i class="material-icons">expand_more</i>載入更多</button></div>
-<textarea class="form-control hide" rows="10"></textarea>
+<textarea id="playlist" class="form-control d-none" rows="10"></textarea>
+<textarea id="downloadlist" class="form-control d-none" rows="10"></textarea>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js" integrity="sha256-AoNQZpaRmemSTxMy9xcqXX5VLwI6IMPYugO7bFHOW+U=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
   $("#function").hide();
   $("#_playlist").hide();
@@ -100,7 +101,7 @@
     }).fail(function() {
       alert("系統繁忙，請稍後再試。");
     });
-    if($("textarea").html() == "") {
+    if($("#playlist").html() == "" && $("#downloadlist").html() == "") {
       $("#function").hide();
     } else {
       $("#function").show();
@@ -114,14 +115,14 @@
   $addplaylist = function(title, url) {
     playlist += "#EXTINF:0," + title + "\r";
     playlist += decodeURIComponent(url) + "\r";
-    $("textarea").html(playlist);
+    $("#playlist").html(playlist);
     $("#function").show();
     $("#_playlist").show();
   }
   $adddownloadlist = function(title, url) {
     //alert("開發中...");
     downloadlist += "ffmpeg -i \"" + decodeURIComponent(url) + "\" -c copy \"" + title + ".ts\"\r\n";;
-    $("textarea").html(downloadlist);
+    $("#downloadlist").html(downloadlist);
     $("#function").show();
     $("#_downloadlist").show();
   }

@@ -9,7 +9,7 @@ $uuid = $_GET['uuid'];
 $pid = $_GET['pid']; //VAHM01352733
 if(!empty($uuid) && !empty($pid)) {
   $api = "https://mtg.now.com/moov/api/content/checkout?deviceid={$uuid}&devicetype=web&cat=playlist&reftype=&pid={$pid}&preview=F&connect=web&streamtype=stdhls&quality=HD";
-  $cookie = file_get_contents('https://eservice-hk.net/moov/cookies.php?_='.microtime(true));
+  $cookie = file_get_contents('cookies.php?_='.microtime(true));
   $login_ch = curl_init();
   curl_setopt($login_ch, CURLOPT_URL, $api);
   curl_setopt($login_ch, CURLOPT_RETURNTRANSFER, true);

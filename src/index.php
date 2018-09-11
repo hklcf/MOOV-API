@@ -90,6 +90,9 @@
       result_from = result_from + result_count;
       $.each(data.dataObject.products.primarySearch, function(index, value) {
         name = value.artist + " - " + value.productTitle;
+        name = name.replace(/\"/g, '%22');
+        name = name.replace(/\%/g, '%25');
+        name = name.replace(/\'/g, '%27');
         url = "https://eservice-hk.net/moov/api.php?uuid=" + uuid + "&pid=" + value.productId;
         playlist_table_b += "<tr><th scope=\"row\"><img src=\"" + value.image + "\"></th><td>" + value.artist + "</td><td>" + value.productTitle + "</td><td>" + value.albumTitle + "</td><td><a href=\"" + url + "\" title=\"播放\"><i class=\"material-icons\">play_circle_outline</i></a></td><td><a href=\"#\" title=\"加入播放清單\" onclick=\"$addplaylist(\'" + name + "\', \'" + encodeURIComponent(url) + "\');this.removeAttribute('href');this.removeAttribute('onclick');return false;\"><i class=\"material-icons\">playlist_add</i></a></td><td><a href=\"#\" title=\"加入下載列表\" onclick=\"$adddownloadlist(\'" + name + "\', \'" + encodeURIComponent(url) + "\');this.removeAttribute('href');this.removeAttribute('onclick');return false;\"><i class=\"material-icons\">queue</i></a></td></tr>";
       });
@@ -113,7 +116,7 @@
   }
   //https://mtg.now.com/moov/api/content/checkout?deviceid=28861520-144C-4F9A-9B55-8AF1554C4A3A&cat=user&refid=user&reftype=user&pid=VAEG01403476&preview=F&devicetype=iPhone&connect=Phone&quality=LL&application=moovnext&clientver=2.3.3
   $addplaylist = function(title, url) {
-    playlist += "#EXTINF:0," + title + "\r";
+    playlist += "#EXTINF:0," + decodeURI(title) + "\r";
     playlist += decodeURIComponent(url) + "\r";
     $("#playlist").html(playlist);
     $("#function").show();
@@ -121,7 +124,7 @@
   }
   $adddownloadlist = function(title, url) {
     //alert("開發中...");
-    downloadlist += "ffmpeg -i \"" + decodeURIComponent(url) + "\" -c copy \"" + title + ".ts\"\r\n";;
+    downloadlist += "ffmpeg -i \"" + decodeURIComponent(url) + "\" -c copy \"" + decodeURI(title) + ".ts\"\r\n";;
     $("#downloadlist").html(downloadlist);
     $("#function").show();
     $("#_downloadlist").show();

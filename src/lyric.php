@@ -1,4 +1,10 @@
 <?php
+/*
+    Version: 1.0
+    Copyright: HKLCF
+    Last Modified: 04/12/2018
+*/
+
 $pid = $_GET['pid']; //VAHM01352733
 if(!empty($pid)) {
   $api = "https://mtg.now.com/moov/api/lyric/getLyric?pid={$pid}";
